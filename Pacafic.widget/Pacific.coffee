@@ -5,14 +5,14 @@ refreshFrequency: 30000
 style: """
 
   @font-face
-   font-family: 'Futurist Fixed-width'
-   src: local('Futurist Fixed-width'), local('Futurist Fixed-width'),
-         url(Futurist-Fixed-width-Bold.ttf)
+   font-family: 'GeosansLight'
+   src: local('GeosansLight'), local('GeosansLight'),
+         url(GeosansLight.ttf)
 
   @font-face
-    font-family: 'Agatha Needs Flesh'
-    src: local('Agatha Needs Flesh'), local('Agatha Needs Flesh'),
-         url(Agatha-Needs-Flesh.ttf)
+   font-family: 'Pacifico'
+   src: local('Pacifico'), local('Pacifico'),
+         url(Pacifico.ttf)
 
   color: #fff
 
@@ -35,54 +35,13 @@ style: """
    text-shadow:0px 0px 20px rgba(0,0,0,0.3)
    font-smoothing: antialiased
 
-  .square
-   margin: auto
-   position: relative
-   height: 400px
-   width: 300px
-
-  .rectTop
-   position: absolute;
-   top: 5px;
-   left: 50px;
-   height: 3px;
-   width: 200px;
-   background-color: #fff;
-
-  .rectLeft
-   position: absolute
-   top: 5px
-   left: 50px
-   height: 200px
-   width: 3px
-   background-color: #fff
-
-  .rectRight
-   position: absolute
-   top: 5px
-   left: 250px
-   height: 200px
-   width: 3px
-   background-color: #fff
-
-  .rectBottom
-   position: absolute;
-   top: 205px;
-   left: 50px;
-   height: 3px;
-   width: 203px;
-   background-color: #fff;
-
   .month
    margin: auto
    position: relative
-   top: 170px
-   left: 45px
-   transform: rotate(-22.5deg)
-   font-family: 'Agatha Needs Flesh'
-   font-size: 75px
-   font-weight: bold
-   text-transform: uppercase
+   top: 500px
+   left: -60px
+   font-family: 'Pacifico'
+   font-size: 100px
 
   .date
    margin: auto
@@ -94,7 +53,7 @@ style: """
    text-transform: uppercase
    text-align: center
 
-.time
+  .time
    margin: auto
    position: relative
    margin-top: 200px
@@ -116,13 +75,13 @@ render: -> """
                 <div class="rectRight"></div>
                 <div class="rectBottom"></div>
                 <div class="month">
-                    <span></span>
+                    <span>June</span>
                 </div>
                 <div class="time">
-                    <span></span>
+                    <span>Two Two</span>
                 </div>
                 <div class="date">
-                    <span></span>
+                    <span>Friday - 29</span>
                 </div>
             </div>
         </div>
@@ -131,6 +90,12 @@ render: -> """
 
   #Update function
 update: (output, domEl) ->
+
+  #Options: (true/false)
+  showAmPm = true;
+  showName = true;
+  fourTwenty = false; #Smoke Responsibly
+  militaryTime = false; #Military Time = 24 hour time
 
   #Arrays
   monthsArr = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
