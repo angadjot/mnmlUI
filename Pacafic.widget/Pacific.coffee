@@ -23,125 +23,83 @@ style: """
 
   .container
    margin: auto
-   position: relative
+   position: absolute
    top: 50%
    left: 50%
-   transform: translate(-122%, -60%);
-   height:400px
-   width:600px
-   font-weight: bold
-   text-align:center
+   transform: translate(-50%, -50%);
+   height:auto
+   width:auto
+   font-weight:bold
    color: #fff
    text-shadow:0px 0px 20px rgba(0,0,0,0.3)
    font-smoothing: antialiased
 
   .month
-   margin: auto
-   position: relative
    top: 500px
    left: -60px
    font-family: 'Pacifico'
    font-size: 100px
+   text-align: right
 
-  .date
-   margin: auto
-   position: relative
-   margin-top: 10px
-   font-family: 'Futurist Fixed-width'
-   font-size: 18px
-   font-weight: bold
+  .Year
+   top: -10px
+   left: -30px
+   font-family: 'GeosansLight'
+   font-size: 22px
    text-transform: uppercase
-   text-align: center
+   text-align: right
 
-  .time
-   margin: auto
-   position: relative
-   margin-top: 200px
-   font-family: 'Futurist Fixed-width'
-   font-size: 18px
-   font-weight: bold
+  .TimeDate
+   top: -10px
+   left: -30px
+   font-family: 'GeosansLight'
+   font-size: 22px
    text-transform: uppercase
-   text-align: center
+   text-align: right
 
 """
 
 #Render function
 render: -> """
   <div class="main">
-        <div class="container">
-            <div class="square">
-                <div class="rectTop"></div>
-                <div class="rectLeft"></div>
-                <div class="rectRight"></div>
-                <div class="rectBottom"></div>
-                <div class="month">
-                    <span>June</span>
-                </div>
-                <div class="time">
-                    <span>Two Two</span>
-                </div>
-                <div class="date">
-                    <span>Friday - 29</span>
-                </div>
-            </div>
-        </div>
+    <div class="container">
+      <div class="month"><span></span></div>
+      <div class="Year"><span></span></div>
+      <div class="TimeDate"><span></span></div>
     </div>
+  </div>
 """
 
   #Update function
 update: (output, domEl) ->
 
-  #Options: (true/false)
-  showAmPm = true;
-  showName = true;
-  fourTwenty = false; #Smoke Responsibly
-  militaryTime = false; #Military Time = 24 hour time
-
   #Arrays
-  monthsArr = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
-  monthRightLineLenghtArr = [140, 140, 110, 110, 150, 150, 150, 140, 110, 140, 110, 110]
-  monthBottomLineLenght = [50, 10, 65, 100, 90, 80, 90, 80, 20, 40, 20, 20]
-  hours = [null, "One", "Two", "Three", "Four", "Five", "Six", "Seven",
-    "Eight", "Nine", "Ten", "Eleven", "Twelve"]
-  ones = ["Zero", "One", "Two", "Three", "Four", "Five", "Six", "Seven",
-    "Eight", "Nine"]
-  teens = ["Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen",
-    "Sixteen", "Seventeen", "Eighteen", "Nineteen"]
-  tens = [null, null, "Twenty", "Thirty", "Forty", "Fifty"]
+  months = ["jan", "feb", "mar", "apr", "May", "June", "July", "aug", "Sept", "Oct", "Nov", "Dec"]
   days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
 
   #Creating a new Date object
   date = new Date()
+  year = date.getFullYear()
   hour = date.getHours()
   minute = date.getMinutes()
   day = date.getDay()
   month = date.getMonth()
-  hour   = hour % 12
-  hour   = 12 if hour == 0
   day_date = date.getDate()
 
-  hour_str = hours[hour]
-  if minute >= 0 && minute <= 9
-    minute_str = "#{ones[minute]}"
-  else if minute >= 10 && minute <= 19
-    minute_str = teens[minute - 10]
+  if hour >= 12
+    ampm = 'PM'
   else
-    minute_str = tens[minute.toString()[0..0]]
-    if minute.toString()[1..1] != "0"
-      minute_str += ones[minute.toString()[1..1]]
+    ampm = 'AM'
 
-  time_str = hour_str + ' ' + minute_str
-  monthName = monthsArr[month]
-  bottomLineLenght = monthBottomLineLenght[month]
-  rightLineLenght = monthRightLineLenghtArr[month]
+  hour = hour % 12
+  hour = 12 if hour == 0
+  console.log (hour)
+  monthName = months[month]
+  timeDate = hour + ':' + minute + ' ' + ampm + ' ON ' + days[day] + ' ' + day_date
 
-  date_str = days[day] + "-" + day_date
-  console.log("Date_str: " + date_str)
   div = $(domEl)
 
   #DOM manipulation
-  div.find('.rectRight').css('height', rightLineLenght + 'px')
-  div.find('.rectBottom').css('width', bottomLineLenght + 'px')
-  div.find('.time').text("#{time_str}")
   div.find('.month').text("#{monthName}")
-  div.find('.date').text("#{date_str}")
+  div.find('.Year').text("#{year}")
+  div.find('.TimeDate').text("#{timeDate}")
