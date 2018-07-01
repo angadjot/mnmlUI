@@ -11,22 +11,80 @@ style: """
 
   color: #fff
 
+  .main
+   position: relative
+   width: 100vw
+   height: 100vh
+
+  .container
+   margin: auto
+   position: relative
+   top: 50%
+   left: 50%
+   transform: translate(-50%, -50%)
+   height:400px
+   width:600px
+   color: #fff
+   text-shadow:0px 0px 20px rgba(0,0,0,0.3)
+   font-smoothing: antialiased
+
+  .date
+   position: relative
+   top: 160px
+   left: 100px
+   font-family:'Roboto'
+   font-size: 72px
+   font-weight: lighter
+
+  .daigonal
+   position: relative
+   top: 180px
+   left: 15px
+   height: 2px
+   width: 280px
+   transform: rotate(-48deg)
+   background-color: #fff
+
+  .clip-box
+   position: relative
+   height:400px
+   width: auto
+   font-family:'Noir'
+   font-weight: normal
+   -webkit-clip-path: polygon(237px 90px, 600px 90px, 600px 350px, 0px 353px)
+
+  .weekday
+   position: absolute
+   top: 90px
+   left: 200px
+   font-size: 72px
+
+  .month
+   position: absolute
+   top: 150px
+   left: 140px
+   font-size: 72px
+
+  .year
+   position: absolute
+   top: 220px
+   left: 100px
+   font-size: 58px
 """
 
 #Render function
 render: -> """
-  <svg height="1920" width="1080">
-        <text x="120" y="150" id="date" xml:space="preserve" style="font-size:72px;font-style:normal;font-weight:lighter;fill:#fff;font-family:Roboto;font-smoothing:antialiased;"></text>
-        <line x1="260" y1="70" x2="75" y2="280" style="stroke:#fff;stroke-width:2" />
-        <defs>
-            <clipPath id="clip1">
-                <polygon points="15 350,700 350,700 0,320 0" />
-            </clipPath>
-        </defs>
-        <text x="200" y="150" id="weekday" xml:space="preserve" clip-path="url(#clip1)" style="font-size:72px;font-style:normal;font-weight:normal;fill:#fff;font-family:Noir;font-smoothing:antialiased;"></text>
-        <text x="145" y="205" id="month" xml:space="preserve " clip-path="url(#clip1)" style="font-size:72px;font-style:normal;font-weight:normal;fill:#fff;font-family:Noir;font-smoothing:antialiased;"></text>
-        <text x="115" y="260" id="year" xml:space="preserve " clip-path="url(#clip1)" style="font-size:58px;font-style:normal;font-weight:normal;fill:#fff;font-family:Noir;font-smoothing:antialiased;"></text>
-    </svg>
+<div class="main">
+  <div class="container">
+    <div class="date"><sapn>12</span></div>
+    <div class="daigonal"></div>
+    <div class="clip-box">
+      <span class="weekday">wednesday</span>
+      <span class="month">april</span>
+      <span class="year">2018</span>
+    </div>
+  </div>
+</div>
 """
 
   #Update function
@@ -50,6 +108,6 @@ update: (output, domEl) ->
 
   div.find('date').text(date_num)
 
-  #div.find('weekday').text("#{day_str}")
-  #div.find('month').text("#{month_str}")
-  #div.find('year').text("#{year}")
+  div.find('weekday').text("#{day_str}")
+  div.find('month').text("#{month_str}")
+  div.find('year').text("#{year}")
