@@ -23,76 +23,51 @@ style: """
    left: 50%
    transform: translate(-50%, -50%)
    height:400px
-   width:600px
+   width:400px
    color: #fff
    text-shadow:0px 0px 20px rgba(0,0,0,0.3)
    font-smoothing: antialiased
 
-  .date
+  .line
    position: relative
-   top: 160px
-   left: 100px
-   font-family:'Roboto'
-   font-size: 72px
-   font-weight: lighter
-
-  .daigonal
-   position: relative
-   top: 180px
-   left: 15px
+   top: 130px
+   left: 140px
    height: 2px
    width: 280px
-   transform: rotate(-48deg)
+   transform: rotate(90deg)
    background-color: #fff
 
-  .clip-box
+  .weekday
    position: relative
-   height:400px
+   left: 235px
+   height:200px
    width: auto
-   font-family:'Noir'
+   font-family:'GalanoGrotesqueDEMO-Bold'
    font-weight: normal
-   -webkit-clip-path: polygon(237px 90px, 600px 90px, 600px 350px, 0px 353px)
+   font-size: 170px
+   text-align: center
+   -webkit-clip-path: inset(0px 0px 0px 46px)
+   text-transform: uppercase
 
   .time
    position: relative
-   left: 0px
-   top: 240px
+   top: 150px
+   left: 40px
+   font-family:'GalanoGrotesqueDEMO-Bold'
+   font-weight: bold
    font-size: 50px
    text-align: center
    transform: rotate(270deg)
 
-  .weekday
-   position: absolute
-   top: 90px
-   left: 200px
-   font-size: 170px
-   font-weight:normal
-   font-family: GalanoGrotesqueDEMO-Bold
-
-  .month
-   position: absolute
-   top: 150px
-   left: 140px
-   font-size: 72px
-
-  .year
-   position: absolute
-   top: 220px
-   left: 100px
-   font-size: 58px
 """
 
 #Render function
 render: -> """
 <div class="main">
   <div class="container">
-    <div class="date"><sapn>12</span></div>
-    <div class="daigonal"></div>
-    <div class="clip-box">
-      <span class="weekday">wednesday</span>
-      <span class="month">april</span>
-      <span class="year">2018</span>
-    </div>
+    <div class="time"><sapn>01:40 AM</span></div>
+    <div class="line"></div>
+    <div class="weekday">WED</div>
   </div>
 </div>
 """
@@ -100,24 +75,22 @@ render: -> """
   #Update function
 update: (output, domEl) ->
 
-  #Arrays
-  months = ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"]
-  days = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"]
+  days = ["sun", "mon", "tues", "wed", "thur", "fri", "sat"]
 
+  div = $(domEl)
   #Creating a new Date object
   date = new Date()
-  date_num = date.getDate()
-  month = date.getMonth()
+  hour = date.getHours()
+  minute = date.getMinutes()
   day = date.getDay()
-  year = date.getYear()
-  div = $(domEl)
 
+  hour   = hour % 12
+  hour   = 12 if hour == 0
+  hour   = '0' + hour if hour < 10
+
+  time_str = hour + ':' + minute
   day_str = days[day]
-  month_str = months[month]
   #DOM manipulation
 
-  div.find('date').text(date_num)
-
-  div.find('weekday').text("#{day_str}")
-  div.find('month').text("#{month_str}")
-  div.find('year').text("#{year}")
+  div.find('.time').text("#{time_str}")
+  div.find('.weekday').text("#{day_str}")
