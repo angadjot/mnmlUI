@@ -5,9 +5,9 @@ refreshFrequency: 30000
 style: """
 
   @font-face
-   font-family: 'NoirMedium'
-   src: local('NoirMedium'), local('NoirMedium'),
-         url(NoirMedium.ttf)
+   font-family: 'GalanoGrotesqueDEMO-Bold'
+   src: local('GalanoGrotesqueDEMO-Bold'), local('GalanoGrotesqueDEMO-Bold'),
+         url(GalanoGrotesqueDEMO-Bold.otf)
 
   color: #fff
 
@@ -31,9 +31,9 @@ style: """
   .date
    position: relative
    top: 160px
-   left: 120px
+   left: 100px
    font-family:'Roboto'
-   font-size: 90px
+   font-size: 72px
    font-weight: lighter
 
   .daigonal
@@ -53,11 +53,21 @@ style: """
    font-weight: normal
    -webkit-clip-path: polygon(237px 90px, 600px 90px, 600px 350px, 0px 353px)
 
+  .time
+   position: relative
+   left: 0px
+   top: 240px
+   font-size: 50px
+   text-align: center
+   transform: rotate(270deg)
+
   .weekday
    position: absolute
    top: 90px
    left: 200px
-   font-size: 72px
+   font-size: 170px
+   font-weight:normal
+   font-family: GalanoGrotesqueDEMO-Bold
 
   .month
    position: absolute
@@ -76,12 +86,12 @@ style: """
 render: -> """
 <div class="main">
   <div class="container">
-    <div class="date"><sapn></span></div>
+    <div class="date"><sapn>12</span></div>
     <div class="daigonal"></div>
     <div class="clip-box">
-      <span class="weekday"></span>
-      <span class="month"></span>
-      <span class="year"></span>
+      <span class="weekday">wednesday</span>
+      <span class="month">april</span>
+      <span class="year">2018</span>
     </div>
   </div>
 </div>
@@ -99,14 +109,15 @@ update: (output, domEl) ->
   date_num = date.getDate()
   month = date.getMonth()
   day = date.getDay()
-  year = date.getFullYear()
+  year = date.getYear()
   div = $(domEl)
 
   day_str = days[day]
   month_str = months[month]
   #DOM manipulation
 
-  div.find('.date').text("#{date_num}")
-  div.find('.weekday').text("#{day_str}")
-  div.find('.month').text("#{month_str}")
-  div.find('.year').text("#{year}")
+  div.find('date').text(date_num)
+
+  div.find('weekday').text("#{day_str}")
+  div.find('month').text("#{month_str}")
+  div.find('year').text("#{year}")
